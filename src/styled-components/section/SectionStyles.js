@@ -10,7 +10,7 @@ export const StyledSection = styled.section`
 
   &::before {
     content: "";
-    background-image: url("/img/home-01.jpg");
+    background-image: url("img/home-01.jpg");
     top: -100px;
     left: 0;
     right: 0;

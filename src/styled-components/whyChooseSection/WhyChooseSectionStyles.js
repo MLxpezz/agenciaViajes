@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const StyledSectionContainer = styled.section`
   position: relative;
-  background-image: url("/public/img/travlec.jpg");
+  background-image: url("img/travlec.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   padding: 80px 0 50px;
