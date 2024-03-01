@@ -15,5 +15,6 @@ export const GlobalStyle = createGlobalStyle`
   --secondary_text_color: #848484;
   --card_services_back-color: #f1f1f1;
   --text_services_color: #7f7f7f;
+  --footer_background: #393e46;
 }
 `;
