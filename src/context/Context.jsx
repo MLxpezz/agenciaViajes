@@ -12,6 +12,7 @@ const Context = ({children}) => {
             const response = await getAllServices();
             setServices(response);
             setServicesCopy(response);
+            console.log(services);
         })();
     }, []);
 

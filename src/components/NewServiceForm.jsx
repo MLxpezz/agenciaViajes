@@ -4,18 +4,19 @@ import { createNewService } from "../javascript/requests";
 
 const NewServiceForm = ({ showform }) => {
   const [dataForm, setDataForm] = useState({
-    touristServiceName: "",
-    touristService_type: "",
-    destination_touristService: "",
-    touristService_cost: "",
-    date_touristService: "",
-    brief_description: "",
+    name: "",
+    type: "",
+    destination: "",
+    cost: "",
+    date: "",
+    briefDescription: "",
   });
 
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      await createNewService(dataForm);
+      const response = await createNewService(dataForm);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -33,38 +34,38 @@ const NewServiceForm = ({ showform }) => {
       <h5>Nuevo Servicio</h5>
       <input
         type="text"
-        name="touristServiceName"
+        name="name"
         placeholder="Nombre del servicio"
         onChange={(e) => handleInput(e)}
       />
       <input
         type="text"
-        name="touristService_type"
+        name="type"
         placeholder="Tipo de servicio"
         onChange={(e) => handleInput(e)}
       />
       <input
         type="text"
-        name="destination_touristService"
+        name="destination"
         placeholder="Destino"
         onChange={(e) => handleInput(e)}
       />
       <input
         type="number"
-        name="touristService_cost"
+        name="cost"
         placeholder="Costo"
         onChange={(e) => handleInput(e)}
       />
       <input
         type="date"
-        name="date_touristService"
+        name="date"
         onChange={(e) => handleInput(e)}
       />
       <textarea
         cols="30"
         rows="10"
         placeholder="Descripcion"
-        name="brief_description"
+        name="briefDescription"
         onChange={(e) => handleInput(e)}
       ></textarea>
       <button type="submit">Aceptar</button>

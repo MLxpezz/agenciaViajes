@@ -8,11 +8,24 @@ import {
   StyledSection,
   AddButton,
 } from "../styled-components/services/styles";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import { getAllPackages } from "../javascript/requests";
 
 const Packages = () => {
   const [NewPackageForm, setNewPackageForm] = useState(null);
   const [showForm, setShowForm] = useState(false);
+  const [packages, setPackages] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await getAllPackages();
+        setPackages(response);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
   const addForm = () => {
     import("./NewPackagesForm")
@@ -28,6 +41,7 @@ const Packages = () => {
   return (
     <StyledMain>
       {NewPackageForm && showForm && <NewPackageForm showform={setShowForm} />}
+      <header>Paquetes</header>
       <StyledDivTwo>
         <p>Filtrar por Destino:</p>
         <ul>
@@ -80,6 +94,33 @@ const Packages = () => {
           </AddButton>
         </StyledDivThree>
       </StyledDivTwo>
+      <StyledSection>
+        {packages &&
+          packages.map((pack, id) => {
+            return (
+              <StyledArticle key={id}>
+                <StyledDiv>
+                  <span className="material-symbols-outlined">
+                    rocket_launch
+                  </span>
+                </StyledDiv>
+                <p>{pack.packageName}</p>
+                <p>Servicios incluidos:</p>
+                <ul>
+                  {pack.list_services_included.map((p) => {
+                    return (
+                      <li key={p.touristService_code}>
+                        {<p>{`${p.touristServiceName}`}</p>}
+                      </li>
+                    );
+                  })}
+                </ul>
+                <p>{`Precio: ${pack.package_cost}`}</p>
+                <button>Comprar</button>
+              </StyledArticle>
+            );
+          })}
+      </StyledSection>
     </StyledMain>
   );
 };

@@ -10,6 +10,12 @@ export const StyledMain = styled.main`
     color: var(--primary_text_color);
     margin-bottom: 25px;
   }
+
+  h5 {
+    font-size: 20px;
+    margin: auto;
+    color: var(--primary_color);
+  }
 `;
 
 export const StyledSection = styled.section`
@@ -67,6 +73,17 @@ export const StyledArticle = styled.article`
 
     &:nth-child(4) {
       color: var(--text_services_color);
+    }
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    color: var(--primary_color);
+
+    p {
+      width: 100%;
     }
   }
 `;

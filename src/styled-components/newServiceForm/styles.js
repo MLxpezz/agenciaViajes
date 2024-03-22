@@ -16,6 +16,9 @@ export const StyledForm = styled.form`
   right: 0;
   margin: auto;
   transition: all 0.3s;
+  border: 1px solid var(--secondary_color);
+  border-radius: 5px;
+  color: var(--secondary_color);
   animation: slide 0.5s forwards;
 
   @keyframes slide {
@@ -39,7 +42,7 @@ export const StyledForm = styled.form`
     font-size: 15px;
   }
 
-  input {
+  input, select{
     width: 80%;
     padding: 5px;
     color: var(--primary_color);
@@ -83,6 +86,33 @@ export const StyledForm = styled.form`
     &:hover {
       background-color: var(--primary_color);
       color: #fff;
+    }
+  }
+
+  ul {
+    width: 80%;
+    color: var(--primary_color);
+    list-style: none;
+
+    li {
+      border: 1px solid var(--primary_color);
+      border-radius: 5px;
+      margin: 5px 0;
+      padding: 5px;
+    }
+  }
+
+  div {
+    width: 80%;
+
+    label {
+      color: var(--primary_color);
+      margin-bottom: 10px;
+    }
+
+    input {
+      width: 100%;
+      margin: 10px 0 0 0;
     }
   }
 `;

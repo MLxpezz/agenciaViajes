@@ -12,7 +12,7 @@ export const createNewService = async (dataService) => {
       throw new Error("Ocurrio un error al crear el servicio", data.json());
     }
 
-    return data.json();
+    return data.text();
   } catch (error) {
     console.log(error);
   }
@@ -27,6 +27,114 @@ export const getAllServices = async () => {
     }
 
     return data.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+export const getAllPackages = async () => {
+  try {
+    const data = await fetch(`http://localhost:8080/tourist_package/get/all`);
+
+    if(!data.ok) {
+        throw new Error("Ocurrio un error al recuperar los paquetes", data.json());
+    }
+
+    return data.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const createNewPackage = async (dataPackage) => {
+  try {
+    const data = await fetch(`http://localhost:8080/tourist_package/create`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(dataPackage),
+    });
+
+    if (!data.ok) {
+      throw new Error("Ocurrio un error al crear el paquete", data.json());
+    }
+
+    return data.text();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getAllClients = async () => {
+  try {
+    const data = await fetch(`http://localhost:8080/customer/get/all`);
+
+    if(!data.ok) {
+        throw new Error("Ocurrio un error al recuperar los clientes", data.json());
+    }
+
+    return data.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const createNewClient = async (dataClient) => {
+  try {
+    const data = await fetch(`http://localhost:8080/customer/create`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(dataClient),
+    });
+
+    if (!data.ok) {
+      throw new Error("Ocurrio un error al crear el cliente", data.json());
+    }
+
+    return data.text();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteClient = async (idClient) => {
+  try {
+    const data = await fetch(`http://localhost:8080/customer/delete/${idClient}`, {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+
+    if (!data.ok) {
+      throw new Error("Ocurrio un error al eliminar el cliente", data.json());
+    }
+
+    return data.text();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateClient = async (dataClient, id) => {
+  try {
+    const data = await fetch(`http://localhost:8080/customer/edit/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(dataClient)
+    });
+
+    if (!data.ok) {
+      throw new Error("Ocurrio un error al editar el cliente", data.json());
+    }
+
+    return data.text();
   } catch (error) {
     console.log(error);
   }

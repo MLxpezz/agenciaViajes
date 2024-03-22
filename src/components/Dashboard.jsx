@@ -8,8 +8,8 @@ import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 
 const StyledContainer = styled.div`
-    display: flex;
-`
+  display: flex;
+`;
 
 const Dashboard = () => {
   return (
@@ -21,7 +21,12 @@ const Dashboard = () => {
         <StyledSection>
           <header>General</header>
           <StyledUl>
-            <li>Inicio</li>
+            <li><Link
+                to={"/"}
+                style={{ color: "#fff", textDecoration: "none" }}
+              >
+                Inicio
+              </Link></li>
             <li>
               <Link
                 to={"/servicios"}
@@ -30,18 +35,27 @@ const Dashboard = () => {
                 Servicios
               </Link>
             </li>
-            <li><Link
+            <li>
+              <Link
                 to={"/paquetes"}
                 style={{ color: "#fff", textDecoration: "none" }}
               >
                 Paquetes
-              </Link></li>
+              </Link>
+            </li>
           </StyledUl>
         </StyledSection>
         <StyledSection>
           <header>Administracion</header>
           <StyledUl>
-            <li>Clientes</li>
+            <li>
+              <Link
+                to={"/clientes"}
+                style={{ color: "#fff", textDecoration: "none" }}
+              >
+                Clientes
+              </Link>
+            </li>
             <li>Empleados</li>
             <li>Ventas</li>
           </StyledUl>
