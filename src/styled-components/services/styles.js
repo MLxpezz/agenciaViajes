@@ -30,6 +30,7 @@ export const StyledSection = styled.section`
 `;
 
 export const StyledArticle = styled.article`
+  position: relative;
   display: flex;
   height: 100%;
   flex-direction: column;
@@ -59,19 +60,32 @@ export const StyledArticle = styled.article`
       color: #fff;
       background-color: var(--primary_color);
     }
+
+    &:nth-child(1), &:nth-child(2) {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 0;
+      width: 25px;
+      margin: 20px;
+    }
+
+    &:nth-child(1) {
+      right: 30px;
+    }
   }
 
   p {
     width: 80%;
     text-align: center;
 
-    &:nth-child(2) {
+    &:nth-child(4) {
       color: var(--primary_color);
       font-size: 18px;
       font-weight: 600;
     }
 
-    &:nth-child(4) {
+    &:nth-child(5) {
       color: var(--text_services_color);
     }
   }
@@ -157,15 +171,15 @@ export const StyledDivThree = styled.div`
 `;
 
 export const SearchButton = styled.button`
-    position: absolute;
-    right: 5px;
-    top: 31px;
+  position: absolute;
+  right: 5px;
+  top: 31px;
 `;
 
 export const AddButton = styled.button`
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    color: var(--primary_color);
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--primary_color);
+  cursor: pointer;
 `;

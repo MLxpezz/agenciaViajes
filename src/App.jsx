@@ -1,7 +1,7 @@
 import Dashboard from "./components/Dashboard";
 import Services from "./components/Services";
 import Packages from "./components/Packages";
-import Root from "./Root";
+import Employees from "./components/Employees";
 import { GlobalStyle } from "./styled-components/GlobalStyle";
 import { Routes, Route } from "react-router-dom";
 import Context from "./context/Context";
@@ -16,6 +16,7 @@ function App() {
           <Route path="/servicios" element={<Services />}/>
           <Route path="/paquetes" element={<Packages />}/>
           <Route path="/clientes" element={<Clients />}/>
+          <Route path="/empleados" element={<Employees />}/>
         </Route>
       </Routes>
     </Context>

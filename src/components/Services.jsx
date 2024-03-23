@@ -10,10 +10,12 @@ import {
   SearchButton,
   AddButton,
 } from "../styled-components/services/styles";
-import { getAllServices } from "../javascript/requests";
+import { deleteService } from "../javascript/requests";
 
 const Services = () => {
   const [NewServiceForm, setNewServiceForm] = useState(null);
+  const [serviceToUpdate, setServiceToUpdate] = useState({});
+  const [action, setAction] = useState("");
   const [showForm, setShowForm] = useState(false);
   const { services, setServices, servicesCopy } = useContext(context);
 
@@ -34,10 +36,7 @@ const Services = () => {
     const filteredServices = servicesCopy
       .map((service) => {
         const dateToString = service.date[1].toString();
-        if (
-          service.date[1] < 10 &&
-          !dateToString.startsWith(0)
-        ) {
+        if (service.date[1] < 10 && !dateToString.startsWith(0)) {
           service.date[1] = `0${service.date[1]}`;
         }
 
@@ -52,6 +51,19 @@ const Services = () => {
     setServices(filteredServices);
   };
 
+  const transformDate = (service) => {
+    const UpdatedDate = service.date.map((pieceOfDate) => {
+      if (pieceOfDate < 10 && !pieceOfDate.toString().startsWith(0)) {
+        pieceOfDate = `0${pieceOfDate}`;
+      }
+      return pieceOfDate.toString();
+    });
+
+    const serviceUpdatedDate = { ...service, date: UpdatedDate.join("-") };
+
+    return serviceUpdatedDate;
+  };
+
   const filterDestination = (destination) => {
     const filteredServices = servicesCopy.filter(
       (service) => service.destination === destination
@@ -61,9 +73,7 @@ const Services = () => {
 
   const searchDestination = (destination) => {
     const filteredServices = servicesCopy.filter((service) => {
-      return service.destination
-        .toLowerCase()
-        .startsWith(destination);
+      return service.destination.toLowerCase().startsWith(destination);
     });
     setServices(filteredServices);
   };
@@ -79,9 +89,23 @@ const Services = () => {
       });
   };
 
+  const delService = async (idService) => {
+    try {
+      const response = await deleteService(idService);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updService = (service) => {
+    addForm();
+    setServiceToUpdate(service);
+  };
+
   return (
     <StyledMain>
-      {NewServiceForm && showForm && <NewServiceForm showform={setShowForm} />}
+      {NewServiceForm && showForm && <NewServiceForm showform={setShowForm} dataService={serviceToUpdate} action={action}/>}
       <header>Servicios</header>
       <StyledDivTwo>
         <p>Filtrar por categoria:</p>
@@ -147,7 +171,10 @@ const Services = () => {
             name="date"
             onChange={(e) => filterDate(e.target.value)}
           />
-          <AddButton onClick={addForm}>
+          <AddButton onClick={() => {
+            addForm();
+            setAction("add");
+          }}>
             <span className="material-symbols-outlined">add_circle</span>
             Añadir nuevo servicio
           </AddButton>
@@ -158,6 +185,19 @@ const Services = () => {
           services.map((service, id) => {
             return (
               <StyledArticle key={id}>
+                <button
+                  onClick={() => {
+                    delService(service.touristServiceCode);
+                  }}
+                >
+                  <span className="material-symbols-outlined">delete</span>
+                </button>
+                <button onClick={() => {
+                  updService(transformDate(service));
+                  setAction("edit");
+                }}>
+                  <span className="material-symbols-outlined">edit</span>
+                </button>
                 <StyledDiv>
                   <span className="material-symbols-outlined">
                     rocket_launch

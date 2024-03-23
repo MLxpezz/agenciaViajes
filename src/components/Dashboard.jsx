@@ -21,12 +21,11 @@ const Dashboard = () => {
         <StyledSection>
           <header>General</header>
           <StyledUl>
-            <li><Link
-                to={"/"}
-                style={{ color: "#fff", textDecoration: "none" }}
-              >
+            <li>
+              <Link to={"/"} style={{ color: "#fff", textDecoration: "none" }}>
                 Inicio
-              </Link></li>
+              </Link>
+            </li>
             <li>
               <Link
                 to={"/servicios"}
@@ -56,7 +55,14 @@ const Dashboard = () => {
                 Clientes
               </Link>
             </li>
-            <li>Empleados</li>
+            <li>
+              <Link
+                to={"/empleados"}
+                style={{ color: "#fff", textDecoration: "none" }}
+              >
+                Empleados
+              </Link>
+            </li>
             <li>Ventas</li>
           </StyledUl>
         </StyledSection>

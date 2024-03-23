@@ -1,21 +1,21 @@
-import { useState, useEffect, useContext } from "react";
-import { context } from "../context/Context";
-import { deleteClient } from "../javascript/requests";
 import { StyledMain } from "../styled-components/services/styles";
 import { AddButton, StyledTable } from "../styled-components/clients/styles";
+import { useState, useContext } from "react";
+import { context } from "../context/Context";
+import { deleteEmployee } from "../javascript/requests";
 
-const Clients = () => {
+const Employees = () => {
   const [showForm, setShowForm] = useState(false);
-  const [NewClientForm, setNewClientForm] = useState(null);
-  const [clientToUpdate, setClientToUpdate] = useState({});
+  const [NewEmployeeForm, setNewEmployeeForm] = useState(null);
+  const [employeeToUpdate, setEmployeeToUpdate] = useState({});
   const [action, setAction] = useState("");
 
-  const { clients, setClients } = useContext(context);
+  const { employees, setEmployees } = useContext(context);
 
   const addForm = () => {
-    import("./NewClientForm")
+    import("./NewEmployeeForm")
       .then((module) => {
-        setNewClientForm(() => module.default);
+        setNewEmployeeForm(() => module.default);
         setShowForm(!showForm);
       })
       .catch((error) => {
@@ -23,13 +23,13 @@ const Clients = () => {
       });
   };
 
-  const delClient = (idClient) => {
+  const delClient = (idEmployee) => {
     try {
-      deleteClient(idClient);
-      const updateClients = clients.filter((client) => {
-        return client.customerId !== idClient;
+      deleteEmployee(idEmployee);
+      const updateEmployees = employees.filter((employee) => {
+        return employee.employeeId !== idEmployee;
       });
-      setClients(updateClients);
+      setEmployees(updateEmployees);
     } catch (error) {
       console.log(error);
     }
@@ -37,7 +37,7 @@ const Clients = () => {
 
   const updClient = (data) => {
     addForm();
-    setClientToUpdate(data);
+    setEmployeeToUpdate(data);
   };
 
   const transformDate = (client) => {
@@ -55,15 +55,15 @@ const Clients = () => {
 
   return (
     <StyledMain>
-      {NewClientForm && showForm && (
-        <NewClientForm
+      {NewEmployeeForm && showForm && (
+        <NewEmployeeForm
           showform={setShowForm}
-          dataClient={clientToUpdate}
+          dataEmployee={employeeToUpdate}
           action={action}
-          setClients={setClients}
+          setEmployee={setEmployees}
         />
       )}
-      <header>Clientes</header>
+      <header>Empleados</header>
       <AddButton
         onClick={() => {
           addForm();
@@ -71,34 +71,38 @@ const Clients = () => {
         }}
       >
         <span className="material-symbols-outlined">add_circle</span>
-        Añadir nuevo cliente
+        Añadir nuevo Empleado
       </AddButton>
-      {clients && clients.length > 0 ? (
+      {employees && employees.length > 0 ? (
         <StyledTable>
           <thead>
             <tr>
               <th>Nombre</th>
               <th>Telefono</th>
               <th>Email</th>
-              <th>Nacionalidad</th>
+              <th>Fecha de cumpleaños</th>
+              <th>Rol</th>
+              <th>Salario</th>
               <th>acciones</th>
             </tr>
           </thead>
           <tbody>
-            {clients.map((client) => {
+            {employees.map((employee) => {
               return (
-                <tr key={client.customerId}>
-                  <td>{`${client.name} ${client.surname}`}</td>
-                  <td>{client.cellPhone}</td>
-                  <td>{client.email}</td>
-                  <td>{client.nacionality}</td>
+                <tr key={employee.employeeId}>
+                  <td>{`${employee.name} ${employee.surname}`}</td>
+                  <td>{employee.cellPhone}</td>
+                  <td>{employee.email}</td>
+                  <td>{`${employee.birthDate[0]}-${employee.birthDate[1]}-${employee.birthDate[2]}`}</td>
+                  <td>{employee.role}</td>
+                  <td>{`$${employee.salary}.00`}</td>
                   <td>
-                    <button onClick={(e) => delClient(client.customerId)}>
+                    <button onClick={(e) => delClient(employee.employeeId)}>
                       <span className="material-symbols-outlined">delete</span>
                     </button>
                     <button
                       onClick={(e) => {
-                        updClient(transformDate(client));
+                        updClient(transformDate(employee));
                         setAction("edit");
                       }}
                     >
@@ -111,10 +115,10 @@ const Clients = () => {
           </tbody>
         </StyledTable>
       ) : (
-        <h5>{`Aun no existe ningun cliente en la base de datos :(`}</h5>
+        <h5>{`Aun no existe ningun Empleado en la base de datos :(`}</h5>
       )}
     </StyledMain>
   );
 };
 
-export default Clients;
+export default Employees;

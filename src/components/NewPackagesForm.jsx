@@ -31,10 +31,6 @@ const NewPackageForm = ({ showform }) => {
     setPackageCost(packageCost + selectedService.touristService_cost);
   };
 
-  const handleInput = (packName) => {
-    setPackageName(packName);
-  }
-
   return (
     <StyledForm action="" onSubmit={onSubmit}>
       <h5>Nuevo Paquete</h5>
