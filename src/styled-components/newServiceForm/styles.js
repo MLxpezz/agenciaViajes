@@ -9,9 +9,9 @@ export const StyledForm = styled.form`
   align-items: center;
   justify-content: center;
   background-color: #fff;
-  gap: 20px;
+  gap: 10px;
   z-index: 100;
-  top: 200px;
+  top: 100px;
   left: 0;
   right: 0;
   margin: auto;
@@ -32,6 +32,11 @@ export const StyledForm = styled.form`
     }
   }
 
+  p {
+    color: red;
+    font-size: 14px;
+  }
+
   h5 {
     font-size: 20px;
     color: var(--primary_color);
@@ -42,8 +47,9 @@ export const StyledForm = styled.form`
     font-size: 15px;
   }
 
-  input, select{
-    width: 80%;
+  input,
+  select {
+    width: 100%;
     padding: 5px;
     color: var(--primary_color);
     font-weight: 600;
@@ -58,11 +64,12 @@ export const StyledForm = styled.form`
   }
 
   textarea {
-    width: 80%;
+    width: 100%;
     outline: none;
     border: 1px solid var(--secondary_color);
     border-radius: 5px;
     resize: none;
+    margin-top: 10px;
     color: var(--primary_color);
 
     &::placeholder {
@@ -103,7 +110,7 @@ export const StyledForm = styled.form`
   }
 
   div {
-    width: 80%;
+    width: 100%;
 
     label {
       color: var(--primary_color);
@@ -113,6 +120,22 @@ export const StyledForm = styled.form`
     input {
       width: 100%;
       margin: 10px 0 0 0;
+    }
+
+    span {
+      font-size: 15px;
+    }
+  }
+`;
+
+export const StyledDiv = styled.div`
+  span {
+    font-size: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+
+    &:nth-child(2) {
+      float: right;
     }
   }
 `;

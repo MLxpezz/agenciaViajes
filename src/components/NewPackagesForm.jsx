@@ -6,35 +6,41 @@ import { createNewPackage } from "../javascript/requests";
 const NewPackageForm = ({ showform }) => {
   const [listServices, setListServices] = useState([]);
   const [packageName, setPackageName] = useState("");
-  const [packageCost, setPackageCost] = useState(0);
   const { services } = useContext(context);
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const dataPackage = {
-      packageName: packageName,
-      list_services_included: listServices,
-      package_cost: packageCost,
+    try {
+      const dataPackage = {
+        name: packageName,
+        services_included: listServices,
+      };
+      const response = await createNewPackage(dataPackage);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
     }
-    console.log(dataPackage);
-    // await createNewPackage(dataPackage);
   };
 
   const handleSelect = (inputContent) => {
     let selectedService = {};
     services.forEach((service) => {
-      if (service.touristService_code === Number(inputContent)) {
+      if (service.touristServiceCode === Number(inputContent)) {
         selectedService = service;
       }
     });
     setListServices([...listServices, selectedService]);
-    setPackageCost(packageCost + selectedService.touristService_cost);
   };
 
   return (
     <StyledForm action="" onSubmit={onSubmit}>
       <h5>Nuevo Paquete</h5>
-      <input type="text" value={packageName} placeholder="Nombre del paquete" onChange={(e) => setPackageName(e.target.value)}/>
+      <input
+        type="text"
+        value={packageName}
+        placeholder="Nombre del paquete"
+        onChange={(e) => setPackageName(e.target.value)}
+      />
       <select
         name="vuelo"
         id=""
@@ -47,14 +53,14 @@ const NewPackageForm = ({ showform }) => {
         </option>
         {services
           .filter((service) => {
-            return service.touristService_type.toLowerCase() === "vuelo";
+            return service.type.toLowerCase() === "vuelo";
           })
           .map((service) => {
             return (
               <option
-                key={service.touristService_code}
-                value={service.touristService_code}
-              >{`${service.touristService_type} con destino a ${service.destination_touristService}, precio: ${service.touristService_cost}`}</option>
+                key={service.touristServiceCode}
+                value={service.touristServiceCode}
+              >{`${service.type} con destino a ${service.destination}, precio: ${service.cost}`}</option>
             );
           })}
       </select>
@@ -70,14 +76,14 @@ const NewPackageForm = ({ showform }) => {
         </option>
         {services
           .filter((service) => {
-            return service.touristService_type.toLowerCase() === "hotel";
+            return service.type.toLowerCase() === "hotel";
           })
           .map((service) => {
             return (
               <option
-                value={service.touristService_code}
-                key={service.touristService_code}
-              >{`${service.touristService_type} con destino a ${service.destination_touristService}, precio: ${service.touristService_cost}`}</option>
+                value={service.touristServiceCode}
+                key={service.touristServiceCode}
+              >{`${service.type} con destino a ${service.destination}, precio: ${service.cost}`}</option>
             );
           })}
       </select>
@@ -88,29 +94,29 @@ const NewPackageForm = ({ showform }) => {
           handleSelect(e.target.value);
         }}
       >
-        <option value="Renta de autos">Renta de auto</option>
+        <option hidden value="Renta de autos">
+          Renta de auto
+        </option>
         {services
           .filter((service) => {
-            return (
-              service.touristService_type.toLowerCase() === "renta de auto"
-            );
+            return service.type.toLowerCase() === "renta de auto";
           })
           .map((service) => {
             return (
               <option
-                value={service.touristService_code}
-                key={service.touristService_code}
-              >{`${service.touristService_type} con destino a ${service.destination_touristService}, precio: ${service.touristService_cost}`}</option>
+                value={service.touristServiceCode}
+                key={service.touristServiceCode}
+              >{`${service.type} con destino a ${service.destination}, precio: ${service.cost}`}</option>
             );
           })}
       </select>
-      <p>{`Costo total de el paquete: $${packageCost}.00`}</p>
+      {listServices.length > 0 && <span>Lista de servicios:</span>}
       <ul>
         {listServices.map((service, index) => {
           return (
             <li key={index}>
               <p>
-                {`${service.touristService_type} con destino a ${service.destination_touristService} y un precio de $${service.touristService_cost}`}
+                {`${service.type} con destino a ${service.destination} y un precio de $${service.cost}`}
               </p>
             </li>
           );

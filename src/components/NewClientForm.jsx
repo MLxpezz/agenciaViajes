@@ -2,7 +2,7 @@ import { StyledForm } from "../styled-components/newServiceForm/styles";
 import { useState } from "react";
 import { createNewClient, updateClient } from "../javascript/requests";
 
-const NewClientForm = ({ showform, dataClient, action,setClients }) => {
+const NewClientForm = ({ showform, dataClient, action, setClients }) => {
   const [dataForm, setDataForm] = useState({
     name: action === "edit" ? dataClient.name : "",
     surname: action === "edit" ? dataClient.surname : "",
@@ -14,6 +14,16 @@ const NewClientForm = ({ showform, dataClient, action,setClients }) => {
     cellPhone: action === "edit" ? dataClient.cellPhone : "",
     email: action === "edit" ? dataClient.email : "",
   });
+  const [errorInput, setErrorInput] = useState({
+    name: "",
+    surname: "",
+    direction: "",
+    dni: "",
+    birthDate: "",
+    nacionality: "",
+    cellPhone: "",
+    email: "",
+  });
 
   const handleRequests = {
     add: createNewClient,
@@ -22,6 +32,7 @@ const NewClientForm = ({ showform, dataClient, action,setClients }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    if(!isValidInput(e.target)) return;
     const updatedClients = [];
     try {
       const response = await handleRequests[action](dataForm, dataClient.customerId);
@@ -41,16 +52,45 @@ const NewClientForm = ({ showform, dataClient, action,setClients }) => {
     }));
   };
 
+  const isValidInput = (inputs) => {
+    let isValid = true;
+
+    for (const input of inputs) {
+      if (input.value.trim() === "" && input.tagName !== "BUTTON") {
+        const inputName = input.placeholder;
+        setErrorInput((previous) => ({
+          ...previous,
+          [input.name]:
+            input.name === "date"
+              ? `El campo ${inputName} es obligatorio y debe ser pasada.`
+              : `El campo ${inputName} es obligatorio.`,
+        }));
+        isValid = false;
+      } else {
+        setErrorInput((previous) => ({
+          ...previous,
+          [input.name]: ``,
+        }));
+      }
+    }
+
+    return isValid;
+  };
+
   return (
     <StyledForm action="" onSubmit={onSubmit}>
       <h5>{action === "add" ? "Nuevo cliente" : "Editar cliente"}</h5>
-      <input
-        type="text"
-        name="name"
-        placeholder="Nombre"
-        value={dataForm.name}
-        onChange={(e) => handleInput(e)}
-      />
+      <div>
+        <input
+          type="text"
+          name="name"
+          placeholder="Nombre"
+          value={dataForm.name}
+          onChange={(e) => handleInput(e)}
+        />
+        <p>{errorInput.name}</p>
+      </div>
+      <div>
       <input
         type="text"
         name="surname"
@@ -58,6 +98,9 @@ const NewClientForm = ({ showform, dataClient, action,setClients }) => {
         placeholder="Apellido"
         onChange={(e) => handleInput(e)}
       />
+      <p>{errorInput.surname}</p>
+      </div>
+      <div>
       <input
         type="text"
         name="direction"
@@ -65,6 +108,9 @@ const NewClientForm = ({ showform, dataClient, action,setClients }) => {
         placeholder="Direccion"
         onChange={(e) => handleInput(e)}
       />
+      <p>{errorInput.direction}</p>
+      </div>
+      <div>
       <input
         type="text"
         name="dni"
@@ -72,6 +118,8 @@ const NewClientForm = ({ showform, dataClient, action,setClients }) => {
         placeholder="DNI"
         onChange={(e) => handleInput(e)}
       />
+      <p>{errorInput.dni}</p>
+      </div>
       <div>
         <label htmlFor="birth_date">Fecha de cumpleaños</label>
         <input
@@ -81,7 +129,9 @@ const NewClientForm = ({ showform, dataClient, action,setClients }) => {
           placeholder="Fecha de cumpleaños"
           onChange={(e) => handleInput(e)}
         />
+        <p>{errorInput.birthDate}</p>
       </div>
+      <div>
       <input
         type="text"
         placeholder="Nacionalidad"
@@ -89,6 +139,9 @@ const NewClientForm = ({ showform, dataClient, action,setClients }) => {
         value={dataForm.nacionality}
         onChange={(e) => handleInput(e)}
       />
+      <p>{errorInput.nacionality}</p>
+      </div>
+      <div>
       <input
         type="text"
         placeholder="Telefono"
@@ -96,6 +149,9 @@ const NewClientForm = ({ showform, dataClient, action,setClients }) => {
         value={dataForm.cellPhone}
         onChange={(e) => handleInput(e)}
       />
+      <p>{errorInput.cellPhone}</p>
+      </div>
+      <div>
       <input
         type="text"
         placeholder="Correo electronico"
@@ -103,6 +159,8 @@ const NewClientForm = ({ showform, dataClient, action,setClients }) => {
         value={dataForm.email}
         onChange={(e) => handleInput(e)}
       />
+      <p>{errorInput.email}</p>
+      </div>
       <button type="submit">Aceptar</button>
       <button
         onClick={() => {

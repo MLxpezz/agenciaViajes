@@ -251,3 +251,56 @@ export const updateEmployee = async (dataEmployee, id) => {
     console.log(error);
   }
 };
+
+export const getAllSales = async () => {
+  try {
+    const data = await fetch(`http://localhost:8080/sale/get/all`);
+
+    if(!data.ok) {
+        throw new Error("Ocurrio un error al recuperar las ventas", data.json());
+    }
+
+    return data.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const createNewSale = async (dataSale) => {
+  try {
+    const data = await fetch(`http://localhost:8080/sale/create`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(dataSale),
+    });
+
+    if (!data.ok) {
+      throw new Error("Ocurrio un error al crear la venta", data.json());
+    }
+
+    return data.text();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteSale = async (idSale) => {
+  try {
+    const data = await fetch(`http://localhost:8080/sale/delete/${idSale}`, {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+
+    if (!data.ok) {
+      throw new Error("Ocurrio un error al eliminar la venta", data.json());
+    }
+
+    return data.text();
+  } catch (error) {
+    console.log(error);
+  }
+};

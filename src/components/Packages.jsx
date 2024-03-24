@@ -20,7 +20,8 @@ const Packages = () => {
     (async () => {
       try {
         const response = await getAllPackages();
-        setPackages(response);
+        console.log(response);
+        // setPackages(response);
       } catch (error) {
         console.log(error);
       }
@@ -107,15 +108,15 @@ const Packages = () => {
                 <p>{pack.packageName}</p>
                 <p>Servicios incluidos:</p>
                 <ul>
-                  {pack.list_services_included.map((p) => {
+                  {pack.listServicesIncluded.map((p) => {
                     return (
-                      <li key={p.touristService_code}>
+                      <li key={p.touristServiceCode}>
                         {<p>{`${p.touristServiceName}`}</p>}
                       </li>
                     );
                   })}
                 </ul>
-                <p>{`Precio: ${pack.package_cost}`}</p>
+                <p>{`Precio: ${pack.packageCost}`}</p>
                 <button>Comprar</button>
               </StyledArticle>
             );

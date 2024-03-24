@@ -63,7 +63,14 @@ const Dashboard = () => {
                 Empleados
               </Link>
             </li>
-            <li>Ventas</li>
+            <li>
+              <Link
+                to={"/ventas"}
+                style={{ color: "#fff", textDecoration: "none" }}
+              >
+                Ventas
+              </Link>
+            </li>
           </StyledUl>
         </StyledSection>
         <StyledSection>

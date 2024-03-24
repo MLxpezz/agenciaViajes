@@ -11,6 +11,14 @@ const NewServiceForm = ({ showform, dataService, action }) => {
     date: action === "edit" ? dataService.date : "",
     briefDescription: action === "edit" ? dataService.briefDescription : "",
   });
+  const [errorInput, setErrorInput] = useState({
+    name: "",
+    type: "",
+    destination: "",
+    cost: "",
+    date: "",
+    briefDescription: "",
+  });
 
   const handleRequests = {
     add: createNewService,
@@ -19,6 +27,7 @@ const NewServiceForm = ({ showform, dataService, action }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    if(!isValidInput(e.target)) return;
     try {
       const response = await handleRequests[action](
         dataForm,
@@ -38,51 +47,95 @@ const NewServiceForm = ({ showform, dataService, action }) => {
     }));
   };
 
+  const isValidInput = (inputs) => {
+    let isValid = true;
+
+    for (const input of inputs) {
+      if (input.value.trim() === "" && input.tagName !== "BUTTON") {
+        const inputName = input.placeholder;
+        setErrorInput((previous) => ({
+          ...previous,
+          [input.name]:
+            input.name === "date"
+              ? `El campo ${inputName} es obligatorio y debe ser pasada.`
+              : `El campo ${inputName} es obligatorio.`,
+        }));
+        isValid = false;
+      } else {
+        setErrorInput((previous) => ({
+          ...previous,
+          [input.name]: ``,
+        }));
+      }
+    }
+
+    return isValid;
+  };
+
   return (
     <StyledForm action="" onSubmit={onSubmit}>
       <h5>{action === "edit" ? "Editar Servicio" : "Nuevo Servicio"}</h5>
-      <input
-        type="text"
-        name="name"
-        value={dataForm.name}
-        placeholder="Nombre del servicio"
-        onChange={(e) => handleInput(e)}
-      />
-      <input
-        type="text"
-        name="type"
-        value={dataForm.type}
-        placeholder="Tipo de servicio"
-        onChange={(e) => handleInput(e)}
-      />
-      <input
-        type="text"
-        name="destination"
-        value={dataForm.destination}
-        placeholder="Destino"
-        onChange={(e) => handleInput(e)}
-      />
-      <input
-        type="number"
-        name="cost"
-        value={dataForm.cost}
-        placeholder="Costo"
-        onChange={(e) => handleInput(e)}
-      />
-      <input
-        type="date"
-        value={dataForm.date}
-        name="date"
-        onChange={(e) => handleInput(e)}
-      />
-      <textarea
-        cols="30"
-        rows="10"
-        value={dataForm.briefDescription}
-        placeholder="Descripcion"
-        name="briefDescription"
-        onChange={(e) => handleInput(e)}
-      ></textarea>
+      <div>
+        <input
+          type="text"
+          name="name"
+          value={dataForm.name}
+          placeholder="Nombre del servicio"
+          onChange={(e) => handleInput(e)}
+        />
+        <p>{errorInput.name}</p>
+      </div>
+      <div>
+        <input
+          type="text"
+          name="type"
+          value={dataForm.type}
+          placeholder="Tipo de servicio"
+          onChange={(e) => handleInput(e)}
+        />
+        <p>{errorInput.type}</p>
+      </div>
+      <div>
+        <input
+          type="text"
+          name="destination"
+          value={dataForm.destination}
+          placeholder="Destino"
+          onChange={(e) => handleInput(e)}
+        />
+        <p>{errorInput.destination}</p>
+      </div>
+      <div>
+        <input
+          type="number"
+          name="cost"
+          value={dataForm.cost}
+          placeholder="Costo"
+          onChange={(e) => handleInput(e)}
+        />
+        <p>{errorInput.cost}</p>
+      </div>
+      <div>
+        <input
+          type="date"
+          value={dataForm.date}
+          placeholder="Fecha"
+          name="date"
+          onChange={(e) => handleInput(e)}
+        />
+        <p>{errorInput.date}</p>
+      </div>
+      <div>
+        <textarea
+          cols="30"
+          rows="10"
+          value={dataForm.briefDescription}
+          placeholder="Descripcion"
+          name="briefDescription"
+          onChange={(e) => handleInput(e)}
+        ></textarea>
+        <p>{errorInput.briefDescription}</p>
+      </div>
       <button type="submit">Aceptar</button>
       <button
         onClick={() => {

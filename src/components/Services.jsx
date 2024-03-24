@@ -14,10 +14,12 @@ import { deleteService } from "../javascript/requests";
 
 const Services = () => {
   const [NewServiceForm, setNewServiceForm] = useState(null);
+  const [NewSaleForm, setNewSaleForm] = useState(null);
   const [serviceToUpdate, setServiceToUpdate] = useState({});
   const [action, setAction] = useState("");
   const [showForm, setShowForm] = useState(false);
   const { services, setServices, servicesCopy } = useContext(context);
+  const [serviceToBuy, setServiceToBuy] = useState({});
 
   useEffect(() => {
     // Establecer el array original al inicio
@@ -89,6 +91,17 @@ const Services = () => {
       });
   };
 
+  const addSale = () => {
+    import("./NewFormSale")
+      .then((module) => {
+        setNewSaleForm(() => module.default);
+        setShowForm(!showForm);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const delService = async (idService) => {
     try {
       const response = await deleteService(idService);
@@ -105,6 +118,7 @@ const Services = () => {
 
   return (
     <StyledMain>
+      {NewSaleForm && showForm && <NewSaleForm showform={setShowForm} serviceToBuy={serviceToBuy}/>}
       {NewServiceForm && showForm && <NewServiceForm showform={setShowForm} dataService={serviceToUpdate} action={action}/>}
       <header>Servicios</header>
       <StyledDivTwo>
@@ -208,7 +222,10 @@ const Services = () => {
                 <p>{`Precio: ${service.cost}`}</p>
                 <p>{`Fecha: ${service.date}`}</p>
                 <p>{`Descripcion: ${service.briefDescription}`}</p>
-                <button>Comprar</button>
+                <button onClick={() => {
+                  addSale();
+                  setServiceToBuy(service);
+                }}>Comprar</button>
               </StyledArticle>
             );
           })}
