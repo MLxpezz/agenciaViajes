@@ -145,4 +145,8 @@ export const StyledUl = styled.ul`
   display: flex;
   align-items: center;
   gap: 10px;
+
+  button {
+    width: 100px;
+  }
 `
