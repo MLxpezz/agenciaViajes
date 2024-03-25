@@ -18,7 +18,7 @@ const NewPackageForm = ({ showform, setCostPackage, cost }) => {
       const response = await createNewPackage(dataPackage);
       const costResponse = JSON.parse(response);
       console.log(costResponse.packageCost);
-      setCostPackage(cost + costResponse.packageCost);
+      setCostPackage(costResponse);
       console.log(cost);
     } catch (error) {
       console.log(error);

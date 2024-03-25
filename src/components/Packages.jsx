@@ -25,6 +25,10 @@ const Packages = () => {
     setPackages(packages);
   }, [packages]);
 
+  useEffect(() => {
+    console.log(costPackage);
+  }, [costPackage]);
+
   const addForm = () => {
     import("./NewPackagesForm")
       .then((module) => {
