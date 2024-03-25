@@ -28,7 +28,9 @@ const Packages = () => {
 
   useEffect(() => {
     console.log(costPackage, "desde packages");
-    setArrCosts([...arrCosts, costPackage]);
+    let arr = [];
+    arr.push(costPackage);
+    setArrCosts(arr);
     console.log(arrCosts);
   }, [costPackage]);
 
