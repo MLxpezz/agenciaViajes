@@ -41,7 +41,7 @@ const Sale = () => {
               sales.map((sale) => {
                 return (
                   <tr key={sale.saleNumber}>
-                    <td>{`${sale.name} ${sale.surname}`}</td>
+                    <td>{`${sale.date}`}</td>
                     <td>{sale.paymentMethod}</td>
                     <td>
                       {sale.touristService ? sale.touristService.name : ""}

@@ -70,6 +70,7 @@ const Packages = () => {
         <NewPackageForm
           showform={setShowForm}
           setCostPackage={setCostPackage}
+          cost={costPackage}
         />
       )}
       {NewSaleForm && showForm && (
@@ -118,7 +119,7 @@ const Packages = () => {
                 </button>
                 <button
                   onClick={() => {
-                    updService(transformDate(service));
+                    updService(pack);
                     setAction("edit");
                   }}
                 >
@@ -138,7 +139,7 @@ const Packages = () => {
                     );
                   })}
                 </ul>
-                <p>Precio: ${costPackage.packageCost}.00</p>
+                <p>Precio: ${costPackage}.00</p>
                 <button
                   onClick={() => {
                     addSale();

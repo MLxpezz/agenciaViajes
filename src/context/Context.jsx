@@ -37,7 +37,7 @@ const Context = ({ children }) => {
       setEmployees(responseEmployees);
       setPackages(responsePackages);
       setPackagesCopy(responsePackages);
-      console.log(employees);
+      console.log(packages);
     })();
   }, []);
 
