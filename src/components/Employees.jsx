@@ -93,7 +93,9 @@ const Employees = () => {
                   <td>{`${employee.name} ${employee.surname}`}</td>
                   <td>{employee.cellPhone}</td>
                   <td>{employee.email}</td>
-                  <td>{`${employee.birthDate[0]}-${employee.birthDate[1]}-${employee.birthDate[2]}`}</td>
+                  {employee.birthDate && (
+                    <td>{`${employee.birthDate[0]}-${employee.birthDate[1]}-${employee.birthDate[2]}`}</td>
+                  )}
                   <td>{employee.role}</td>
                   <td>{`$${employee.salary}.00`}</td>
                   <td>
