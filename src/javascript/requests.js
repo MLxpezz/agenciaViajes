@@ -1,4 +1,4 @@
-const url = "https://tourismagency-production.up.railway.app/swagger-ui/index.html#"
+const url = "https://tourismagency-production.up.railway.app"
 
 export const createNewService = async (dataService) => {
   try {
