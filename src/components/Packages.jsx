@@ -27,7 +27,6 @@ const Packages = () => {
 
   useEffect(() => {
     console.log(costPackage, "desde packages");
-    setCostPackage(costPackage);
   }, [costPackage]);
 
   const addForm = () => {
