@@ -33,24 +33,43 @@ const Sale = () => {
               <th>Vendedor</th>
               <th>Comprador</th>
               <th>Precio</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            {sales && sales.map((sale) => {
-              return (
-                <tr key={sale.saleNumber}>
-                  <td>{`${sale.name} ${sale.surname}`}</td>
-                  <td>{sale.cellPhone}</td>
-                  <td>{sale.email}</td>
-                  <td>{sale.nacionality}</td>
-                  <td>
-                    <button>
-                      <span className="material-symbols-outlined">delete</span>
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
+            {sales &&
+              sales.map((sale) => {
+                return (
+                  <tr key={sale.saleNumber}>
+                    <td>{`${sale.name} ${sale.surname}`}</td>
+                    <td>{sale.paymentMethod}</td>
+                    <td>
+                      {sale.touristService ? sale.touristService.name : ""}
+                    </td>
+                    <td>
+                      {sale.touristPackage ? sale.touristPackage.name : ""}
+                    </td>
+                    <td>
+                      {sale.employee.name} {sale.employee.surname}
+                    </td>
+                    <td>
+                      {sale.customer.name} {sale.customer.surname}
+                    </td>
+                    <td>${sale.totalAmount}.00</td>
+                    <td>
+                      <button
+                        onClick={(e) => {
+                          delSale(sale.saleNumber);
+                        }}
+                      >
+                        <span className="material-symbols-outlined">
+                          delete
+                        </span>
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
           </tbody>
         </StyledTable>
       ) : (

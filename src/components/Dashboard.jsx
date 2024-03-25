@@ -73,13 +73,6 @@ const Dashboard = () => {
             </li>
           </StyledUl>
         </StyledSection>
-        <StyledSection>
-          <header>Cuenta</header>
-          <StyledUl>
-            <li>Ver mi cuenta</li>
-            <li>Cerrar sesión</li>
-          </StyledUl>
-        </StyledSection>
       </StyledAside>
       <Outlet />
     </StyledContainer>

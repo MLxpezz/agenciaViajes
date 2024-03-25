@@ -9,24 +9,21 @@ import {
   AddButton,
 } from "../styled-components/services/styles";
 import { useState, useContext, useEffect } from "react";
-import { getAllPackages } from "../javascript/requests";
+import { context } from "../context/Context";
+import { deletePackage } from "../javascript/requests";
 
 const Packages = () => {
   const [NewPackageForm, setNewPackageForm] = useState(null);
   const [showForm, setShowForm] = useState(false);
-  const [packages, setPackages] = useState([]);
+  const [costPackage, setCostPackage] = useState("");
+  const [NewSaleForm, setNewSaleForm] = useState(null);
+  const { services, packages, setPackages, packagesCopy } = useContext(context);
+  const [packageToBuy, setPackageToBuy] = useState({});
 
   useEffect(() => {
-    (async () => {
-      try {
-        const response = await getAllPackages();
-        console.log(response);
-        // setPackages(response);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
+    // Establecer el array original al inicio
+    setPackages(packages);
+  }, [packages]);
 
   const addForm = () => {
     import("./NewPackagesForm")
@@ -39,85 +36,117 @@ const Packages = () => {
       });
   };
 
+  const addSale = () => {
+    import("./NewFormSale")
+      .then((module) => {
+        setNewSaleForm(() => module.default);
+        setShowForm(!showForm);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const delService = (idPackage) => {
+    try {
+      deletePackage(idPackage);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updService = () => {};
+
+  const searchName = (packageName) => {
+    const filteredPackages = packagesCopy.filter((pack) => {
+      return pack.name.toLowerCase().startsWith(packageName);
+    });
+    setPackages(filteredPackages);
+  };
+
   return (
     <StyledMain>
-      {NewPackageForm && showForm && <NewPackageForm showform={setShowForm} />}
+      {NewPackageForm && showForm && (
+        <NewPackageForm
+          showform={setShowForm}
+          setCostPackage={setCostPackage}
+        />
+      )}
+      {NewSaleForm && showForm && (
+        <NewSaleForm
+          showform={setShowForm}
+          serviceToBuy={packageToBuy}
+          cost={costPackage}
+        />
+      )}
       <header>Paquetes</header>
-      <StyledDivTwo>
-        <p>Filtrar por Destino:</p>
-        <ul>
-          <li>
-            <button onClick={(e) => filterDestination(e.target.textContent)}>
-              España
-            </button>
-          </li>
-          <li>
-            <button onClick={(e) => filterDestination(e.target.textContent)}>
-              Nueva York
-            </button>
-          </li>
-          <li>
-            <button onClick={(e) => filterDestination(e.target.textContent)}>
-              Rio de Janeiro
-            </button>
-          </li>
-          <li>
-            <button onClick={(e) => filterDestination(e.target.textContent)}>
-              Paris
-            </button>
-          </li>
-          <li>
-            <button onClick={(e) => filterDestination(e.target.textContent)}>
-              Japon
-            </button>
-          </li>
-        </ul>
-        <StyledDivThree>
-          <label htmlFor="destino">Otro destino:</label>
-          <input
-            type="text"
-            placeholder="Destino"
-            name="destino"
-            onChange={(e) => searchDestination(e.target.value)}
-          />
-          <SearchButton>
-            <span className="material-symbols-outlined">search</span>
-          </SearchButton>
-          <label htmlFor="date_touristService">Fecha del servicio:</label>
-          <input
-            type="date"
-            name="date_touristService"
-            onChange={(e) => filterDate(e.target.value)}
-          />
-          <AddButton onClick={addForm}>
-            <span className="material-symbols-outlined">add_circle</span>
-            Añadir nuevo paquete
-          </AddButton>
-        </StyledDivThree>
-      </StyledDivTwo>
+      {services && services.length > 0 ? (
+        <StyledDivTwo>
+          <StyledDivThree>
+            <label htmlFor="destino">Filtro por nombre:</label>
+            <input
+              type="text"
+              placeholder="Destino"
+              name="destino"
+              onChange={(e) => searchName(e.target.value)}
+            />
+            <SearchButton>
+              <span className="material-symbols-outlined">search</span>
+            </SearchButton>
+            <AddButton onClick={addForm}>
+              <span className="material-symbols-outlined">add_circle</span>
+              Añadir nuevo paquete
+            </AddButton>
+          </StyledDivThree>
+        </StyledDivTwo>
+      ) : (
+        <h5>
+          No hay servicios todavia, no puedes crear paquetes sin servicios.
+        </h5>
+      )}
       <StyledSection>
         {packages &&
           packages.map((pack, id) => {
             return (
               <StyledArticle key={id}>
+                <button
+                  onClick={() => {
+                    delService(pack.touristPackageCode);
+                  }}
+                >
+                  <span className="material-symbols-outlined">delete</span>
+                </button>
+                <button
+                  onClick={() => {
+                    updService(transformDate(service));
+                    setAction("edit");
+                  }}
+                >
+                  <span className="material-symbols-outlined">edit</span>
+                </button>
                 <StyledDiv>
                   <span className="material-symbols-outlined">
                     rocket_launch
                   </span>
                 </StyledDiv>
-                <p>{pack.packageName}</p>
+                <p>{pack.name}</p>
                 <p>Servicios incluidos:</p>
                 <ul>
-                  {pack.listServicesIncluded.map((p) => {
+                  {pack.servicesIncluded.map((p) => {
                     return (
-                      <li key={p.touristServiceCode}>
-                        {<p>{`${p.touristServiceName}`}</p>}
-                      </li>
+                      <li key={p.touristServiceCode}>{<p>{`${p.name}`}</p>}</li>
                     );
                   })}
                 </ul>
-                <p>{`Precio: ${pack.packageCost}`}</p>
-                <button>Comprar</button>
+                <p>Precio: ${costPackage.packageCost}.00</p>
+                <button
+                  onClick={() => {
+                    addSale();
+                    setPackageToBuy(pack);
+                  }}
+                >
+                  Comprar
+                </button>
               </StyledArticle>
             );
           })}

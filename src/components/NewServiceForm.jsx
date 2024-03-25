@@ -9,7 +9,7 @@ const NewServiceForm = ({ showform, dataService, action }) => {
     destination: action === "edit" ? dataService.destination : "",
     cost: action === "edit" ? dataService.cost : "",
     date: action === "edit" ? dataService.date : "",
-    briefDescription: action === "edit" ? dataService.briefDescription : "",
+    brief_description: action === "edit" ? dataService.briefDescription : "",
   });
   const [errorInput, setErrorInput] = useState({
     name: "",
@@ -17,7 +17,7 @@ const NewServiceForm = ({ showform, dataService, action }) => {
     destination: "",
     cost: "",
     date: "",
-    briefDescription: "",
+    brief_description: "",
   });
 
   const handleRequests = {
@@ -26,15 +26,13 @@ const NewServiceForm = ({ showform, dataService, action }) => {
   };
 
   const onSubmit = async (e) => {
-    e.preventDefault();
     if(!isValidInput(e.target)) return;
     try {
-      const response = await handleRequests[action](
+      await handleRequests[action](
         dataForm,
         dataService.touristServiceCode
       );
       showform(false);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -129,12 +127,12 @@ const NewServiceForm = ({ showform, dataService, action }) => {
         <textarea
           cols="30"
           rows="10"
-          value={dataForm.briefDescription}
+          value={dataForm.brief_description}
           placeholder="Descripcion"
-          name="briefDescription"
+          name="brief_description"
           onChange={(e) => handleInput(e)}
         ></textarea>
-        <p>{errorInput.briefDescription}</p>
+        <p>{errorInput.brief_description}</p>
       </div>
       <button type="submit">Aceptar</button>
       <button

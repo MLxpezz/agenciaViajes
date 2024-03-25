@@ -15,8 +15,8 @@ const NewFormSale = ({ showForm, serviceToBuy }) => {
     paymentMethod: "",
     customer: {},
     employee: {},
-    tourist_service: serviceToBuy.type ? serviceToBuy : "",
-    tourist_package: null,
+    touristService: serviceToBuy.type ? serviceToBuy : null,
+    touristPackage: serviceToBuy.touristPackageCode ? serviceToBuy : null,
   });
 
   const handleInput = (inputContent) => {
@@ -49,9 +49,8 @@ const NewFormSale = ({ showForm, serviceToBuy }) => {
     console.log(dataForm);
     try {
       const response = await createNewSale(dataForm);
-      console.log(response);
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
   };
 
@@ -74,7 +73,7 @@ const NewFormSale = ({ showForm, serviceToBuy }) => {
         <option hidden value="employee">
           Empleado que realiza la compra
         </option>
-        {employees.map((employee) => {
+        {employees && employees.map((employee) => {
           return (
             <option
               key={employee.employeeId}
@@ -85,17 +84,26 @@ const NewFormSale = ({ showForm, serviceToBuy }) => {
       </select>
       <div>
         <span>
-          Nombre del servicio: <b>{serviceToBuy.name}</b>
+          Nombre del {serviceToBuy.type ? "servicio" : "paquete"}:{" "}
+          <b>{serviceToBuy.name}</b>
         </span>
         <br />
-        <span>
-          Destino: <b>{serviceToBuy.destination}</b>
-        </span>
+        {serviceToBuy?.destination ? (
+          <span>
+            Destino: <b>{serviceToBuy.destination}</b>
+          </span>
+        ) : (
+          ""
+        )}
         <br />
-        <span>
-          Fecha:{" "}
-          <b>{`${serviceToBuy.date[0]}-${serviceToBuy.date[1]}-${serviceToBuy.date[2]}`}</b>
-        </span>
+        {serviceToBuy.date ? (
+          <span>
+            Fecha:{" "}
+            <b>{`${serviceToBuy.date[0]}-${serviceToBuy.date[1]}-${serviceToBuy.date[2]}`}</b>
+          </span>
+        ) : (
+          ""
+        )}
       </div>
       <StyledDiv>
         <span

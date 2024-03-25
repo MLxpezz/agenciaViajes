@@ -11,7 +11,7 @@ const NewClientForm = ({ showform, dataClient, action, setClients }) => {
     birthDate: action === "edit" ? dataClient.birthDate : "",
     nacionality: action === "edit" ? dataClient.nacionality : "",
     customerId: action === "edit" ? dataClient : "",
-    cellPhone: action === "edit" ? dataClient.cellPhone : "",
+    cell_phone: action === "edit" ? dataClient.cellPhone : "",
     email: action === "edit" ? dataClient.email : "",
   });
   const [errorInput, setErrorInput] = useState({
@@ -145,8 +145,8 @@ const NewClientForm = ({ showform, dataClient, action, setClients }) => {
       <input
         type="text"
         placeholder="Telefono"
-        name="cellPhone"
-        value={dataForm.cellPhone}
+        name="cell_phone"
+        value={dataForm.cell_phone}
         onChange={(e) => handleInput(e)}
       />
       <p>{errorInput.cellPhone}</p>

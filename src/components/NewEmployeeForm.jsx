@@ -8,10 +8,10 @@ const NewEmployeeForm = ({ showform, dataEmployee, action, setEmployee }) => {
     surname: action === "edit" ? dataEmployee.surname : "",
     direction: action === "edit" ? dataEmployee.direction : "",
     dni: action === "edit" ? dataEmployee.dni : "",
-    birthDate: action === "edit" ? dataEmployee.birthDate : "",
+    birth_date: action === "edit" ? dataEmployee.birthDate : "",
     nacionality: action === "edit" ? dataEmployee.nacionality : "",
     employeeId: action === "edit" ? dataEmployee.employeeId : "",
-    cellPhone: action === "edit" ? dataEmployee.cellPhone : "",
+    cell_phone: action === "edit" ? dataEmployee.cellPhone : "",
     email: action === "edit" ? dataEmployee.email : "",
     salary: action === "edit" ? dataEmployee.salary : "",
     role: action === "edit" ? dataEmployee.role : "",
@@ -35,7 +35,6 @@ const NewEmployeeForm = ({ showform, dataEmployee, action, setEmployee }) => {
   };
 
   const onSubmit = async (e) => {
-    e.preventDefault();
     if(!isValidInput(e.target)) return;
     const updatedEmployees = [];
     try {
@@ -136,8 +135,8 @@ const NewEmployeeForm = ({ showform, dataEmployee, action, setEmployee }) => {
         <label htmlFor="birth_date">Fecha de cumpleaños</label>
         <input
           type="date"
-          name="birthDate"
-          value={dataForm.birthDate}
+          name="birth_date"
+          value={dataForm.birth_date}
           placeholder="Fecha de cumpleaños"
           onChange={(e) => handleInput(e)}
         />
@@ -157,8 +156,8 @@ const NewEmployeeForm = ({ showform, dataEmployee, action, setEmployee }) => {
         <input
           type="text"
           placeholder="Telefono"
-          name="cellPhone"
-          value={dataForm.cellPhone}
+          name="cell_phone"
+          value={dataForm.cell_phone}
           onChange={(e) => handleInput(e)}
         />
         <p>{errorInput.cellPhone}</p>

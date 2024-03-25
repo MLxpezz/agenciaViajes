@@ -1,6 +1,8 @@
+const url = "https://tourismagency-production.up.railway.app/swagger-ui/index.html#"
+
 export const createNewService = async (dataService) => {
   try {
-    const data = await fetch(`http://localhost:8080/tourist_service/create`, {
+    const data = await fetch(`${url}/create`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -20,7 +22,7 @@ export const createNewService = async (dataService) => {
 
 export const deleteService = async (idService) => {
   try {
-    const data = await fetch(`http://localhost:8080/tourist_service/delete/${idService}`, {
+    const data = await fetch(`${url}/tourist_service/delete/${idService}`, {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",
@@ -39,7 +41,7 @@ export const deleteService = async (idService) => {
 
 export const updateService = async (service, idService) => {
   try {
-    const data = await fetch(`http://localhost:8080/tourist_service/edit/${idService}`, {
+    const data = await fetch(`${url}/tourist_service/edit/${idService}`, {
       method: "PUT",
       headers: {
         "Content-type": "application/json",
@@ -59,7 +61,7 @@ export const updateService = async (service, idService) => {
 
 export const getAllServices = async () => {
   try {
-    const data = await fetch(`http://localhost:8080/tourist_service/get/all`);
+    const data = await fetch(`${url}/tourist_service/get/all`);
 
     if(!data.ok) {
         throw new Error("Ocurrio un error al recuperar los servicios", data.json());
@@ -74,7 +76,7 @@ export const getAllServices = async () => {
 
 export const getAllPackages = async () => {
   try {
-    const data = await fetch(`http://localhost:8080/tourist_package/get/all`);
+    const data = await fetch(`${url}/tourist_package/get/all`);
 
     if(!data.ok) {
         throw new Error("Ocurrio un error al recuperar los paquetes", data.json());
@@ -88,7 +90,7 @@ export const getAllPackages = async () => {
 
 export const createNewPackage = async (dataPackage) => {
   try {
-    const data = await fetch(`http://localhost:8080/tourist_package/create`, {
+    const data = await fetch(`${url}/tourist_package/create`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -106,9 +108,28 @@ export const createNewPackage = async (dataPackage) => {
   }
 };
 
+export const deletePackage = async (idPackage) => {
+  try {
+    const data = await fetch(`${url}/tourist_package/delete/${idPackage}`, {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+
+    if (!data.ok) {
+      throw new Error("Ocurrio un error al eliminar el paquete", data.json());
+    }
+
+    return data.text();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getAllClients = async () => {
   try {
-    const data = await fetch(`http://localhost:8080/customer/get/all`);
+    const data = await fetch(`${url}/customer/get/all`);
 
     if(!data.ok) {
         throw new Error("Ocurrio un error al recuperar los clientes", data.json());
@@ -122,7 +143,7 @@ export const getAllClients = async () => {
 
 export const createNewClient = async (dataClient) => {
   try {
-    const data = await fetch(`http://localhost:8080/customer/create`, {
+    const data = await fetch(`${url}/customer/create`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -142,7 +163,7 @@ export const createNewClient = async (dataClient) => {
 
 export const deleteClient = async (idClient) => {
   try {
-    const data = await fetch(`http://localhost:8080/customer/delete/${idClient}`, {
+    const data = await fetch(`${url}/customer/delete/${idClient}`, {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",
@@ -161,7 +182,7 @@ export const deleteClient = async (idClient) => {
 
 export const updateClient = async (dataClient, id) => {
   try {
-    const data = await fetch(`http://localhost:8080/customer/edit/${id}`, {
+    const data = await fetch(`${url}/customer/edit/${id}`, {
       method: "PUT",
       headers: {
         "Content-type": "application/json",
@@ -181,7 +202,7 @@ export const updateClient = async (dataClient, id) => {
 
 export const getAllEmployees = async () => {
   try {
-    const data = await fetch(`http://localhost:8080/employee/get/all`);
+    const data = await fetch(`${url}/employee/get/all`);
 
     if(!data.ok) {
         throw new Error("Ocurrio un error al recuperar los empleados", data.json());
@@ -195,7 +216,7 @@ export const getAllEmployees = async () => {
 
 export const createNewEmployee = async (dataClient) => {
   try {
-    const data = await fetch(`http://localhost:8080/employee/create`, {
+    const data = await fetch(`${url}/employee/create`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -215,7 +236,7 @@ export const createNewEmployee = async (dataClient) => {
 
 export const deleteEmployee = async (idClient) => {
   try {
-    const data = await fetch(`http://localhost:8080/employee/delete/${idClient}`, {
+    const data = await fetch(`${url}/employee/delete/${idClient}`, {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",
@@ -234,7 +255,7 @@ export const deleteEmployee = async (idClient) => {
 
 export const updateEmployee = async (dataEmployee, id) => {
   try {
-    const data = await fetch(`http://localhost:8080/employee/edit/${id}`, {
+    const data = await fetch(`${url}/employee/edit/${id}`, {
       method: "PUT",
       headers: {
         "Content-type": "application/json",
@@ -254,7 +275,7 @@ export const updateEmployee = async (dataEmployee, id) => {
 
 export const getAllSales = async () => {
   try {
-    const data = await fetch(`http://localhost:8080/sale/get/all`);
+    const data = await fetch(`${url}/sale/get/all`);
 
     if(!data.ok) {
         throw new Error("Ocurrio un error al recuperar las ventas", data.json());
@@ -268,7 +289,7 @@ export const getAllSales = async () => {
 
 export const createNewSale = async (dataSale) => {
   try {
-    const data = await fetch(`http://localhost:8080/sale/create`, {
+    const data = await fetch(`${url}/sale/create`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -288,7 +309,7 @@ export const createNewSale = async (dataSale) => {
 
 export const deleteSale = async (idSale) => {
   try {
-    const data = await fetch(`http://localhost:8080/sale/delete/${idSale}`, {
+    const data = await fetch(`${url}/sale/delete/${idSale}`, {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",
