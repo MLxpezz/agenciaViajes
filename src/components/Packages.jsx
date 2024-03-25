@@ -16,6 +16,7 @@ const Packages = () => {
   const [NewPackageForm, setNewPackageForm] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [costPackage, setCostPackage] = useState("");
+  const[arrCosts, setArrCosts] = useState([]);
   const [NewSaleForm, setNewSaleForm] = useState(null);
   const { services, packages, setPackages, packagesCopy } = useContext(context);
   const [packageToBuy, setPackageToBuy] = useState({});
@@ -27,6 +28,8 @@ const Packages = () => {
 
   useEffect(() => {
     console.log(costPackage, "desde packages");
+    setArrCosts([...arrCosts, costPackage]);
+    console.log(arrCosts);
   }, [costPackage]);
 
   const addForm = () => {
@@ -143,7 +146,7 @@ const Packages = () => {
                     );
                   })}
                 </ul>
-                <p>Precio: ${costPackage.packageCost}.00</p>
+                <p>Precio: ${arrCosts[id]}.00</p>
                 <button
                   onClick={() => {
                     addSale();
