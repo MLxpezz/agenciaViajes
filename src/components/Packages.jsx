@@ -27,6 +27,7 @@ const Packages = () => {
 
   useEffect(() => {
     console.log(costPackage, "desde packages");
+    setCostPackage(costPackage);
   }, [costPackage]);
 
   const addForm = () => {
@@ -143,7 +144,7 @@ const Packages = () => {
                     );
                   })}
                 </ul>
-                <p>Precio: ${costPackage}.00</p>
+                <p>Precio: ${costPackage.packageCost}.00</p>
                 <button
                   onClick={() => {
                     addSale();
