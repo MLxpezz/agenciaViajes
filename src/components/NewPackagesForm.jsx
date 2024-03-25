@@ -9,6 +9,7 @@ const NewPackageForm = ({ showform, setCostPackage }) => {
   const { services } = useContext(context);
 
   const onSubmit = async (e) => {
+    e.preventDefault();
     try {
       const dataPackage = {
         name: packageName,

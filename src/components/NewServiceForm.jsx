@@ -26,6 +26,7 @@ const NewServiceForm = ({ showform, dataService, action }) => {
   };
 
   const onSubmit = async (e) => {
+    e.preventDefault();
     if(!isValidInput(e.target)) return;
     try {
       await handleRequests[action](

@@ -35,6 +35,7 @@ const NewEmployeeForm = ({ showform, dataEmployee, action, setEmployee }) => {
   };
 
   const onSubmit = async (e) => {
+    e.preventDefault();
     if(!isValidInput(e.target)) return;
     const updatedEmployees = [];
     try {
