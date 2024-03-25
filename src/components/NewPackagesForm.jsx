@@ -1,4 +1,4 @@
-import { StyledForm } from "../styled-components/newServiceForm/styles";
+import { StyledForm, StyledUl } from "../styled-components/newServiceForm/styles";
 import { useContext, useEffect, useState } from "react";
 import { context } from "../context/Context";
 import { createNewPackage } from "../javascript/requests";
@@ -132,7 +132,7 @@ const NewPackageForm = ({ showform, arrCosts, action, packageToUpdate }) => {
           })}
       </select>
       {listServices.length > 0 && <span>Lista de servicios:</span>}
-      <ul>
+      <StyledUl>
         {listServices.map((service, index) => {
           return (
             <li key={index}>
@@ -149,7 +149,7 @@ const NewPackageForm = ({ showform, arrCosts, action, packageToUpdate }) => {
             </li>
           );
         })}
-      </ul>
+      </StyledUl>
       <button type="submit">Aceptar</button>
       <button onClick={() => showform(false)}>Cancelar</button>
     </StyledForm>

@@ -20,6 +20,7 @@ const Packages = () => {
   const { services, packages, setPackages, packagesCopy } = useContext(context);
   const [packageToBuy, setPackageToBuy] = useState({});
   const [packageToUpdate, setpackageToUpdate] = useState({});
+  const [action, setAction] = useState("");
 
   useEffect(() => {
     // Establecer el array original al inicio
@@ -75,6 +76,7 @@ const Packages = () => {
           showform={setShowForm}
           arrCosts={setArrCosts}
           packageToUpdate={packageToUpdate}
+          action={action}
         />
       )}
       {NewSaleForm && showForm && (
