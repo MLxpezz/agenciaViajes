@@ -19,6 +19,7 @@ const Packages = () => {
   const [NewSaleForm, setNewSaleForm] = useState(null);
   const { services, packages, setPackages, packagesCopy } = useContext(context);
   const [packageToBuy, setPackageToBuy] = useState({});
+  const [packageToUpdate, setpackageToUpdate] = useState({});
 
   useEffect(() => {
     // Establecer el array original al inicio
@@ -55,7 +56,10 @@ const Packages = () => {
     }
   };
 
-  const updService = () => {};
+  const updService = (packageToUpdate) => {
+    addForm();
+    setpackageToUpdate(packageToUpdate);
+  };
 
   const searchName = (packageName) => {
     const filteredPackages = packagesCopy.filter((pack) => {
@@ -70,13 +74,14 @@ const Packages = () => {
         <NewPackageForm
           showform={setShowForm}
           arrCosts={setArrCosts}
+          packageToUpdate={packageToUpdate}
         />
       )}
       {NewSaleForm && showForm && (
         <NewSaleForm
           showform={setShowForm}
           serviceToBuy={packageToBuy}
-          cost={costPackage}
+          cost={0}
         />
       )}
       <header>Paquetes</header>

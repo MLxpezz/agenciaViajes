@@ -1,12 +1,22 @@
 import { StyledForm } from "../styled-components/newServiceForm/styles";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { context } from "../context/Context";
 import { createNewPackage } from "../javascript/requests";
 
-const NewPackageForm = ({ showform, setCostPackage, arrCosts }) => {
+const NewPackageForm = ({ showform, arrCosts, action, packageToUpdate }) => {
   const [listServices, setListServices] = useState([]);
-  const [packageName, setPackageName] = useState("");
+  const [packageName, setPackageName] = useState(
+    action === "edit" ? packageToUpdate.name : ""
+  );
   const { services } = useContext(context);
+
+  useEffect(() => {
+    if(action === "edit") {
+      setListServices(packageToUpdate.servicesIncluded);
+    } else {
+      setListServices([]);
+    }
+  }, [action]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -34,6 +44,14 @@ const NewPackageForm = ({ showform, setCostPackage, arrCosts }) => {
     });
     setListServices([...listServices, selectedService]);
   };
+
+  const deleteServiceFromList = (i) => {
+    const newList = listServices.filter((service, index) => {
+      return index !== i;
+    });
+
+    setListServices(newList);
+  }
 
   return (
     <StyledForm action="" onSubmit={onSubmit}>
@@ -119,8 +137,15 @@ const NewPackageForm = ({ showform, setCostPackage, arrCosts }) => {
           return (
             <li key={index}>
               <p>
-                {`${service.type} con destino a ${service.destination} y un precio de $${service.cost}`}
+                {`${service.name} con destino a ${service.destination} y un precio de $${service.cost}`}
               </p>
+              <button
+                  onClick={() => {
+                    deleteServiceFromList(index);
+                  }}
+                >
+                  <span className="material-symbols-outlined">edit</span>
+                </button>
             </li>
           );
         })}
