@@ -1,4 +1,4 @@
-import url from "../../url";
+const url = "https://tourismagency-production.up.railway.app";
 
 export const createNewService = async (dataService) => {
   try {
