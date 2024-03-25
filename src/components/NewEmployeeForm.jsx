@@ -2,7 +2,7 @@ import { StyledForm } from "../styled-components/newServiceForm/styles";
 import { useState } from "react";
 import { createNewEmployee, updateEmployee } from "../javascript/requests";
 
-const NewEmployeeForm = ({ showform, dataEmployee, action, setEmployee }) => {
+const NewEmployeeForm = ({ showform, dataEmployee, action }) => {
   const [dataForm, setDataForm] = useState({
     name: action === "edit" ? dataEmployee.name : "",
     surname: action === "edit" ? dataEmployee.surname : "",
@@ -37,12 +37,9 @@ const NewEmployeeForm = ({ showform, dataEmployee, action, setEmployee }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if(!isValidInput(e.target)) return;
-    const updatedEmployees = [];
     try {
       const response = await handleRequests[action](dataForm, dataEmployee.employeeId);
       showform(false);
-      updatedEmployees.push(dataForm);
-      setEmployee(updatedEmployees);
       console.log(response);
     } catch (error) {
       console.log("Ocurrio un error al intentar crear el empleado", error);

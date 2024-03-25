@@ -2,13 +2,13 @@ import { StyledForm } from "../styled-components/newServiceForm/styles";
 import { useState } from "react";
 import { createNewClient, updateClient } from "../javascript/requests";
 
-const NewClientForm = ({ showform, dataClient, action, setClients }) => {
+const NewClientForm = ({ showform, dataClient, action }) => {
   const [dataForm, setDataForm] = useState({
     name: action === "edit" ? dataClient.name : "",
     surname: action === "edit" ? dataClient.surname : "",
     direction: action === "edit" ? dataClient.direction : "",
     dni: action === "edit" ? dataClient.dni : "",
-    birthDate: action === "edit" ? dataClient.birthDate : "",
+    birth_date: action === "edit" ? dataClient.birthDate : "",
     nacionality: action === "edit" ? dataClient.nacionality : "",
     customerId: action === "edit" ? dataClient : "",
     cell_phone: action === "edit" ? dataClient.cellPhone : "",
@@ -33,12 +33,9 @@ const NewClientForm = ({ showform, dataClient, action, setClients }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if(!isValidInput(e.target)) return;
-    const updatedClients = [];
     try {
       const response = await handleRequests[action](dataForm, dataClient.customerId);
       showform(false);
-      updatedClients.push(dataForm);
-      setClients(updatedClients);
       console.log(response);
     } catch (error) {
       console.log("Ocurrio un error al intentar crear el cliente", error);
@@ -124,8 +121,8 @@ const NewClientForm = ({ showform, dataClient, action, setClients }) => {
         <label htmlFor="birth_date">Fecha de cumpleaños</label>
         <input
           type="date"
-          name="birthDate"
-          value={dataForm.birthDate}
+          name="birth_date"
+          value={dataForm.birth_date}
           placeholder="Fecha de cumpleaños"
           onChange={(e) => handleInput(e)}
         />
