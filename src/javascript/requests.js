@@ -2,7 +2,7 @@ const url = "https://tourismagency-production.up.railway.app"
 
 export const createNewService = async (dataService) => {
   try {
-    const data = await fetch(`${url}/create`, {
+    const data = await fetch(`${url}/tourist_service/create`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
