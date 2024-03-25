@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { context } from "../context/Context";
 import { createNewPackage } from "../javascript/requests";
 
-const NewPackageForm = ({ showform, setCostPackage }) => {
+const NewPackageForm = ({ showform, setCostPackage, arrCosts }) => {
   const [listServices, setListServices] = useState([]);
   const [packageName, setPackageName] = useState("");
   const { services } = useContext(context);
@@ -17,7 +17,10 @@ const NewPackageForm = ({ showform, setCostPackage }) => {
       };
       const response = await createNewPackage(dataPackage);
       const costResponse = JSON.parse(response);
-      setCostPackage(costResponse.packageCost);
+      let arr = [];
+      arr.push(costResponse.packageCost);
+      arrCosts(arr);
+      console.log(arr);
     } catch (error) {
       console.log(error);
     }

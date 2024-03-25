@@ -15,7 +15,6 @@ import { deletePackage } from "../javascript/requests";
 const Packages = () => {
   const [NewPackageForm, setNewPackageForm] = useState(null);
   const [showForm, setShowForm] = useState(false);
-  const [costPackage, setCostPackage] = useState("");
   const[arrCosts, setArrCosts] = useState([]);
   const [NewSaleForm, setNewSaleForm] = useState(null);
   const { services, packages, setPackages, packagesCopy } = useContext(context);
@@ -27,12 +26,8 @@ const Packages = () => {
   }, [packages]);
 
   useEffect(() => {
-    console.log(costPackage, "desde packages");
-    let arr = [];
-    arr.push(costPackage);
-    setArrCosts(arr);
-    console.log(arrCosts);
-  }, [costPackage]);
+    console.log(arrCosts, "desde paquetes");
+  }, [arrCosts]);
 
   const addForm = () => {
     import("./NewPackagesForm")
@@ -78,8 +73,7 @@ const Packages = () => {
       {NewPackageForm && showForm && (
         <NewPackageForm
           showform={setShowForm}
-          setCostPackage={setCostPackage}
-          cost={costPackage}
+          arrCosts={setArrCosts}
         />
       )}
       {NewSaleForm && showForm && (
