@@ -25,10 +25,6 @@ const Packages = () => {
     setPackages(packages);
   }, [packages]);
 
-  useEffect(() => {
-    console.log(arrCosts, "desde paquetes");
-  }, [arrCosts]);
-
   const addForm = () => {
     import("./NewPackagesForm")
       .then((module) => {

@@ -20,7 +20,6 @@ const NewPackageForm = ({ showform, setCostPackage, arrCosts }) => {
       let arr = [];
       arr.push(costResponse.packageCost);
       arrCosts(arr);
-      console.log(arr);
     } catch (error) {
       console.log(error);
     }
